@@ -25,7 +25,8 @@ option(NCNN_STDIO "load model from external file" ON)
 option(NCNN_STRING "plain and verbose string" ON)
 option(NCNN_OPENCV "minimal opencv structure emulation" OFF)
 option(NCNN_BENCHMARK "print benchmark information for every layer" OFF)
-
+option(protobuf_MODULE_COMPATIBLE "CMake build-in FindProtobuf.cmake module compatible" ON)
+add_compile_options(-std=c++11)
 if(NCNN_OPENMP)
     find_package(OpenMP)
     if(OpenMP_CXX_FOUND OR OPENMP_FOUND)
@@ -64,8 +65,8 @@ endif()
 
 ##############################################
 
-# add_subdirectory(examples)
-# add_subdirectory(benchmark)
+ add_subdirectory(examples)
+ add_subdirectory(benchmark)
 add_subdirectory(src)
 if(NOT ANDROID AND NOT IOS)
 add_subdirectory(tools)
