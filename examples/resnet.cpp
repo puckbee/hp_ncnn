@@ -24,18 +24,18 @@
 
 #include "net.h"
 
-static int detect_squeezenet(const cv::Mat& bgr, std::vector<float>& cls_scores)
+static int detect_resnet(const cv::Mat& bgr, std::vector<float>& cls_scores)
 {
-    ncnn::Net squeezenet;
-    squeezenet.load_param("squeezenet_v1.1.param");
-    squeezenet.load_model("squeezenet_v1.1.bin");
+    ncnn::Net resnet;
+    resnet.load_param("resnet.param");
+    resnet.load_model("resnet.bin");
 
-    ncnn::Mat in = ncnn::Mat::from_pixels_resize(bgr.data, ncnn::Mat::PIXEL_BGR, bgr.cols, bgr.rows, 227, 227);
+    ncnn::Mat in = ncnn::Mat::from_pixels_resize(bgr.data, ncnn::Mat::PIXEL_BGR, bgr.cols, bgr.rows, 224, 224);
 
     const float mean_vals[3] = {104.f, 117.f, 123.f};
     in.substract_mean_normalize(mean_vals, 0);
 
-    ncnn::Extractor ex = squeezenet.create_extractor();
+    ncnn::Extractor ex = resnet.create_extractor();
     ex.set_light_mode(true);
 
     ex.input("data", in);
@@ -89,7 +89,7 @@ int main(int argc, char** argv)
     }
 
     std::vector<float> cls_scores;
-    detect_squeezenet(m, cls_scores);
+    detect_resnet(m, cls_scores);
 
     print_topk(cls_scores, 3);
 

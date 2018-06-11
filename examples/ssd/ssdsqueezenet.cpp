@@ -18,6 +18,9 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
+#include <opencv2/imgcodecs/imgcodecs_c.h>
+#include <opencv2/imgproc/imgproc_c.h>
+
 #include "net.h"
 
 struct Object
